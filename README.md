@@ -1,6 +1,6 @@
 # CodeBuddy Usage for Windows 11
 
-把 VS Code 版 **CodeBuddy Usage** 扩展复刻为 Windows 11 独立托盘软件。右下角系统托盘常态化显示积分余量，鼠标悬浮弹出深色玻璃质感明细卡，并自动完成每日签到与喵喵旅行领积分/派出。
+ **CodeBuddy Usage**  Windows 11 独立软件。右下角系统托盘常态化显示积分余量，鼠标悬浮弹出深色玻璃质感明细卡，并自动完成每日签到与喵喵旅行领积分/派出。
 
 ## 功能
 
@@ -38,9 +38,9 @@ wails build
 - `token.bin` — DPAPI 加密的 token 缓存
 - `app.log` — 运行日志（不含 token）
 
-## 逆向结论摘要
+## 结论摘要
 
-功能对齐自本机已安装的 `wwenc6621.codebuddy-usage-0.9.6` 扩展。关键实现事实：
+关键实现事实：
 
 - **登录态**：`%APPDATA%\<Product>\User\globalStorage\state.vscdb` 的 `ItemTable`，key 含 `Tencent-Cloud.coding-copilot.new.accessToken`；value 为 JSON，其 `data` 数组即密文字节。需叠加 `-wal` 未回写页。
 - **密钥**：`%APPDATA%\<Product>\Local State` 的 `os_crypt.encrypted_key`，去 `DPAPI` 5 字节前缀后经 `CryptUnprotectData(CurrentUser)` 解出 32 字节 AES key。
