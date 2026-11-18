@@ -1,0 +1,9 @@
+/* 本地 Tailwind 构建产物（离线可用，无 CDN 依赖）。
+   本应用以 styles.css 自定义样式为主，这里内置极简 reset 与原子类。 */
+*,::before,::after{box-sizing:border-box;border:0 solid #e5e7eb}
+html{-webkit-text-size-adjust:100%;tab-size:4}
+body{margin:0;line-height:inherit}
+h1,h2,h3,h4,p{margin:0}
+button,input,select{font:inherit;color:inherit}
+img,svg{display:block;max-width:100%}
+.hidden{display:none}

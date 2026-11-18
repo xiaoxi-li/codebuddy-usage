@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CodeBuddy Usage</title>
+  <link rel="stylesheet" href="tailwind.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- ============ 悬浮明细卡 ============ -->
+  <main id="cardView" class="card-shell" aria-label="CodeBuddy 积分明细">
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+    <div class="grid-texture"></div>
+
+    <div class="card">
+      <!-- 凭据异常提示条 -->
+      <div id="alertBar" class="alert-bar hidden" role="alert">
+        <span class="alert-icon">!</span>
+        <span id="alertText" class="alert-text">凭据异常</span>
+        <div class="alert-actions">
+          <button type="button" class="alert-btn" data-action="fixAuth">修复</button>
+        </div>
+      </div>
+
+      <!-- 1. 账号区 / 可拖动标题栏 -->
+      <header class="account-row drag-region" style="--wails-draggable: drag;">
+        <img class="brand-logo" src="logo.png" alt="L" onerror="this.style.display='none'">
+        <div class="avatar-wrap" id="avatarWrap">
+          <span class="avatar-fallback" id="avatarFallback">L</span>
+          <img id="avatar" alt="" class="avatar hidden" onerror="this.classList.add('hidden');document.getElementById('avatarFallback').classList.remove('hidden');">
+        </div>
+        <div class="account-meta">
+          <div class="account-name" id="nickname">—</div>
+          <div class="account-sub">CodeBuddy 积分余量</div>
+        </div>
+        <div class="window-controls no-drag">
+          <button type="button" class="icon-btn" data-action="minimize" title="最小化到托盘" aria-label="最小化">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><rect x="5" y="11" width="14" height="2" fill="currentColor"/></svg>
+          </button>
+          <button type="button" class="icon-btn btn-close" data-action="closeWindow" title="关闭窗口" aria-label="关闭">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m6.4 5.3 5.6 5.6 5.6-5.6 1.1 1.1-5.6 5.6 5.6 5.6-1.1 1.1-5.6-5.6-5.6 5.6-1.1-1.1 5.6-5.6-5.6-5.6Z"/></svg>
+          </button>
+        </div>
+        <button type="button" class="icon-btn" data-action="settings" title="设置" aria-label="设置">
+          <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 2.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6Z"/><path fill="currentColor" d="m19.4 13-.1.1 1.2 1-2 3.4-1.5-.5a8 8 0 0 1-1.6.9l-.3 1.6h-4l-.3-1.6a8 8 0 0 1-1.6-.9l-1.5.5-2-3.4 1.2-1-.1-.1a8 8 0 0 1 0-2l-1.2-1 2-3.4 1.5.5a8 8 0 0 1 1.6-.9l.3-1.6h4l.3 1.6a8 8 0 0 1 1.6.9l1.5-.5 2 3.4-1.2 1 .1.1a8 8 0 0 1 0 2Z" opacity=".45"/></svg>
+        </button>
+      </header>
+
+      <!-- 2. 余量概览 -->
+      <section class="balance-block">
+        <div class="balance-head">
+          <div class="balance-number"><span id="remain">0</span><span class="balance-unit">积分</span></div>
+          <div class="balance-total" id="balanceTotal">/ 0 · 0%</div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width:0%">
+            <span class="progress-shine"></span>
+          </div>
+        </div>
+        <div class="balance-foot">
+          <span id="authUntil">凭据有效期 —</span>
+          <button type="button" class="text-btn" data-action="refresh" title="手动刷新">刷新</button>
+        </div>
+      </section>
+
+      <!-- 3. 套餐明细 -->
+      <section class="plans-block">
+        <div class="section-title">
+          <span>套餐明细</span>
+          <span class="section-count" id="planCount">0</span>
+        </div>
+        <div class="plans-head">
+          <span class="col-name">套餐</span>
+          <span class="col-num">剩余</span>
+          <span class="col-num">总量</span>
+          <span class="col-exp">到期</span>
+        </div>
+        <div id="planRows" class="plan-rows">
+          <div class="empty-row">暂无可用套餐</div>
+        </div>
+        <div id="planMore" class="plan-more hidden"></div>
+      </section>
+
+      <!-- 4. 底部状态区 -->
+      <footer class="status-row">
+        <span id="checkinBadge" class="badge badge-unknown"><i class="badge-dot"></i><span>签到状态未知</span></span>
+        <span class="status-spacer"></span>
+        <span id="buddyStatus" class="buddy-text">✿ 旅行状态未知</span>
+      </footer>
+      <div class="updated-line">
+        <span class="author-sign">作者：李亲民</span>
+        <span id="updatedAt">最近更新 —</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ 设置页 ============ -->
+  <main id="settingsView" class="settings-shell hidden" aria-label="设置">
+    <div class="settings-card">
+      <header class="settings-header drag-region" style="--wails-draggable: drag;">
+        <img class="brand-logo" src="logo.png" alt="L" onerror="this.style.display='none'">
+        <div class="settings-heading">
+          <h1 class="settings-title">设置</h1>
+          <p class="settings-sub">CodeBuddy Usage · Windows</p>
+        </div>
+        <div class="window-controls no-drag">
+          <button type="button" class="icon-btn" data-action="closeSettings" title="返回明细" aria-label="返回">
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="m14.5 5.3 5.6 5.6-5.6 5.6-1.1-1.1 3.7-3.7H5v-1.6h12.1l-3.7-3.7Z"/></svg>
+          </button>
+          <button type="button" class="icon-btn" data-action="minimize" title="最小化到托盘" aria-label="最小化">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><rect x="5" y="11" width="14" height="2" fill="currentColor"/></svg>
+          </button>
+          <button type="button" class="icon-btn btn-close" data-action="closeWindow" title="关闭窗口" aria-label="关闭">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="m6.4 5.3 5.6 5.6 5.6-5.6 1.1 1.1-5.6 5.6 5.6 5.6-1.1 1.1-5.6-5.6-5.6 5.6-1.1-1.1 5.6-5.6-5.6-5.6Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="settings-body">
+        <label class="field">
+          <span class="field-label">Access Token <em>自动读取失败时填写</em></span>
+          <input type="password" id="setToken" class="input" placeholder="留空表示使用自动读取" autocomplete="off" spellcheck="false">
+        </label>
+
+        <label class="field">
+          <span class="field-label">刷新间隔 <em>分钟，0 关闭</em></span>
+          <input type="number" id="setInterval" class="input" min="0" max="1440" step="1" value="30">
+        </label>
+
+        <label class="field">
+          <span class="field-label">apiBase <em>国内站 / 国际站</em></span>
+          <select id="setApiBase" class="input">
+            <option value="https://www.workbuddy.cn">https://www.workbuddy.cn（国内）</option>
+            <option value="https://www.workbuddy.ai">https://www.workbuddy.ai（国际）</option>
+          </select>
+        </label>
+
+        <div class="switch-list">
+          <label class="switch-row">
+            <span><b>自动签到</b><small>每天自动领取签到积分</small></span>
+            <input type="checkbox" id="setCheckin" class="switch" checked><i class="switch-ui"></i>
+          </label>
+          <label class="switch-row">
+            <span><b>喵喵旅行</b><small>自动领积分并派出下一趟</small></span>
+            <input type="checkbox" id="setBuddy" class="switch" checked><i class="switch-ui"></i>
+          </label>
+          <label class="switch-row">
+            <span><b>开机自启</b><small>登录 Windows 后自动运行</small></span>
+            <input type="checkbox" id="setAutostart" class="switch"><i class="switch-ui"></i>
+          </label>
+        </div>
+      </div>
+
+      <footer class="settings-footer">
+        <span class="author-sign">作者：李亲民</span>
+        <span class="settings-spacer"></span>
+        <button type="button" class="btn btn-ghost" data-action="closeSettings">取消</button>
+        <button type="button" class="btn btn-primary" data-action="saveSettings">保存设置</button>
+      </footer>
+    </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="card.js"></script>
+</body>
+</html>

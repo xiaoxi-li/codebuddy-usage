@@ -1,0 +1,5 @@
+/* 本地 Tailwind 构建入口。本项目样式以 styles.css 的设计 token 为主，
+   此文件仅保留 Tailwind 基础重置与少量原子类，经构建后输出 tailwind.css，
+   保证离线（无 CDN）场景样式完整可用。 */
+@tailwind base;
+@tailwind utilities;

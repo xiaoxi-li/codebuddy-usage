@@ -1,0 +1,21 @@
+# 编译产物与运行时数据（含凭据，禁止提交）
+build/bin/
+build/appicon.png
+build/windows/info.json
+
+# Go 构建缓存
+*.exe
+*.test
+*.out
+
+# IDE / 编辑器
+.vscode/
+.idea/
+
+# CodeBuddy 本地计划数据
+.codebuddy/
+
+# 系统文件
+Thumbs.db
+desktop.ini
+.DS_Store

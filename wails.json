@@ -1,0 +1,21 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "codebuddy-usage-desktop",
+  "outputfilename": "CodeBuddyUsage",
+  "icon": "build/windows/icon.ico",
+  "frontend:install": "",
+  "frontend:build": "",
+  "frontend:dev:watcher": "",
+  "frontend:dev:serverUrl": "",
+  "author": {
+    "name": "CodeBuddy Usage",
+    "email": ""
+  },
+  "info": {
+    "companyName": "CodeBuddy Usage",
+    "productName": "CodeBuddy Usage",
+    "productVersion": "1.0.0",
+    "copyright": "",
+    "comments": "Windows tray client for CodeBuddy credits"
+  }
+}
