@@ -89,10 +89,7 @@ func BuildUsageResult(accounts []api.Account) UsageResult {
 		return parseExpiry(visible[i].CycleEndTime).Before(parseExpiry(visible[j].CycleEndTime))
 	})
 	result.TotalVisible = len(visible)
-	for i, a := range visible {
-		if i >= 5 {
-			break
-		}
+	for _, a := range visible {
 		remain, size := accountValues(a)
 		result.Visible = append(result.Visible, PlanRow{
 			Name: a.PackageName.String(), Remain: remain, Total: size, Expires: a.CycleEndTime.String(),

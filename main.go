@@ -42,7 +42,7 @@ func main() {
 	err := wails.Run(&options.App{
 		Title:             "CodeBuddy Usage",
 		Width:             422,
-		Height:            470,
+		Height:            490,
 		Frameless:         true,
 		AlwaysOnTop:       true,
 		HideWindowOnClose: true,
@@ -115,8 +115,8 @@ func (a *App) startup(ctx context.Context) {
 	}()
 
 	trayCallbacks := &tray.Callbacks{
-		OnClick:    func() { a.showCardNearTray() },
-		OnRight:    func(x, y int32) { a.showMenuAt(x, y) },
+		OnClick: func() { a.showCardNearTray() },
+		OnRight: func(x, y int32) { a.showMenuAt(x, y) },
 		// 不再响应托盘悬浮：托盘图标常驻显示余量数字，点击才弹明细卡。
 		OnRefresh:  func() { go a.orch.Refresh() },
 		OnClaim:    func() { go a.Claim() },
@@ -174,8 +174,8 @@ func (a *App) showCardNearTray() {
 	if !a.userPositioned.Load() {
 		_, top, _, _, ok := a.tray.GetIconRect()
 		if ok {
-			// 卡片高 470，定位到托盘上方；居中于托盘横坐标
-			x, y := a.trayCenter(), int(top)-478
+			// 卡片高 490，定位到托盘上方；居中于托盘横坐标
+			x, y := a.trayCenter(), int(top)-498
 			if y < 8 {
 				y = 8
 			}
@@ -198,7 +198,7 @@ func (a *App) trayCenter() int {
 	if !ok {
 		return 0
 	}
-	return int((l + r) / 2) - 211
+	return int((l+r)/2) - 211
 }
 
 func (a *App) showMenuAt(x, y int32) {

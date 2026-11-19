@@ -39,7 +39,7 @@ func applyRoundCorners() error {
 	if w <= 0 || h <= 0 {
 		return errors.New("invalid window size")
 	}
-	// 圆角半径：CSS 14px，按 DPI 缩放比例取 14/470 的高度占比，最小 8
+	// 圆角半径：CSS 14px，按 DPI 缩放比例取 14/422 的宽度占比，最小 8
 	radius := w * 14 / 422
 	if radius < 8 {
 		radius = 8

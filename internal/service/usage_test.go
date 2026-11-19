@@ -38,7 +38,7 @@ func TestBuildUsageResult_FallbackFields(t *testing.T) {
 	}
 }
 
-func TestBuildUsageResult_SortAndTruncate(t *testing.T) {
+func TestBuildUsageResult_SortAll(t *testing.T) {
 	accounts := make([]api.Account, 0, 8)
 	for i := 0; i < 8; i++ {
 		accounts = append(accounts, api.Account{
@@ -49,13 +49,13 @@ func TestBuildUsageResult_SortAndTruncate(t *testing.T) {
 		})
 	}
 	r := BuildUsageResult(accounts)
-	if len(r.Visible) != 5 {
-		t.Fatalf("visible rows = %d, want 5", len(r.Visible))
+	if len(r.Visible) != 8 {
+		t.Fatalf("visible rows = %d, want 8", len(r.Visible))
 	}
 	if r.TotalVisible != 8 {
 		t.Fatalf("totalVisible = %d, want 8", r.TotalVisible)
 	}
-	if r.Visible[0].Name != "A" || r.Visible[4].Name != "E" {
-		t.Fatalf("sort/truncate wrong: first=%s last=%s", r.Visible[0].Name, r.Visible[4].Name)
+	if r.Visible[0].Name != "A" || r.Visible[7].Name != "H" {
+		t.Fatalf("sort wrong: first=%s last=%s", r.Visible[0].Name, r.Visible[7].Name)
 	}
 }

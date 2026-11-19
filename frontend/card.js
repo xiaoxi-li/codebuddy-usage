@@ -8,6 +8,8 @@
   let currentSnapshot = null;
   let toastTimer = null;
 
+  const VISIBLE_PLAN_ROWS = 5;
+
   function toast(message) {
     if (!message) return;
     const el = $('toast');
@@ -81,6 +83,7 @@
     // 套餐
     const rows = snapshot.visible || [];
     const container = $('planRows');
+    const scrollTop = container.scrollTop;
     if (!rows.length) {
       container.innerHTML = '<div class="empty-row">暂无可用套餐</div>';
     } else {
@@ -93,10 +96,11 @@
         '</div>'
       )).join('');
     }
+    container.scrollTop = scrollTop;
     $('planCount').textContent = String(snapshot.totalVisible || rows.length);
     const more = $('planMore');
-    if ((snapshot.totalVisible || 0) > rows.length) {
-      more.textContent = '共 ' + snapshot.totalVisible + ' 个套餐，仅显示前 ' + rows.length + ' 条';
+    if (rows.length > VISIBLE_PLAN_ROWS) {
+      more.textContent = '共 ' + rows.length + ' 个套餐 · 上下滚动查看全部';
       more.classList.remove('hidden');
     } else {
       more.classList.add('hidden');
