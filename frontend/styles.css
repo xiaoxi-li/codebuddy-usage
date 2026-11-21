@@ -93,6 +93,10 @@ button { cursor: pointer; border: 0; background: none; color: inherit; }
   /* 不使用 backdrop-filter：WebView2 透明窗口下会在圆角外渲染出白色边角 */
   animation: cardIn .28s cubic-bezier(.2,.8,.2,1) both;
 }
+.account-row,
+.balance-block,
+.status-row,
+.updated-line { flex: none; }
 @keyframes cardIn {
   from { opacity: 0; transform: translateY(10px) scale(.985); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -186,7 +190,17 @@ button { cursor: pointer; border: 0; background: none; color: inherit; }
 .text-btn:hover { background: rgba(78,168,255,.12); }
 
 /* ===== 3. 套餐明细 ===== */
-.plans-block { padding: 12px 0 10px; border-bottom: 1px solid rgba(154,167,184,.1); }
+.plans-block {
+  flex: 0 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0 10px;
+  border-bottom: 1px solid rgba(154,167,184,.1);
+}
+.plans-block > .section-title,
+.plans-block > .plans-head,
+.plans-block > .plan-more { flex: none; }
 .section-title { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 600; color: var(--text-2); letter-spacing: .3px; }
 .section-count {
   font-family: var(--mono); font-size: 9.5px; padding: 1px 6px; border-radius: 8px;
@@ -199,7 +213,14 @@ button { cursor: pointer; border: 0; background: none; color: inherit; }
 .plans-head { margin-top: 9px; padding: 0 6px 5px; font-size: 9.5px; color: var(--text-3); }
 .col-num, .col-exp { text-align: right; }
 .col-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.plan-rows { max-height: 156px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; }
+.plan-rows {
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: 156px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
 .plan-row {
   padding: 6px; border-radius: 6px; font-size: 11px;
   transition: background .15s;
